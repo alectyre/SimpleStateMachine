@@ -1,12 +1,12 @@
 ﻿using UnityEditor;
 
-[CustomEditor(typeof(StateMachine))]
-public class StateMachineEditor : Editor
+[CustomEditor(typeof(StateMachineBehaviour))]
+public class StateMachineBehaviorEditor : Editor
 {
 
     public override void OnInspectorGUI()
     {
-        StateMachine stateMachine = (StateMachine)target;
+        StateMachineBehaviour stateMachine = (StateMachineBehaviour)target;
 
         if (stateMachine.CurrentState != null)
             EditorGUILayout.LabelField("Current State:", stateMachine.CurrentState.GetType().Name);
