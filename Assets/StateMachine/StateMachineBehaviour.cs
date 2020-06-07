@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class StateMachineBehaviour : MonoBehaviour
 {
-
-
     StateBehaviour currentState;
 
     public StateBehaviour CurrentState { get { return currentState; } }
