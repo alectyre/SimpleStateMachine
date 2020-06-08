@@ -1,21 +1,24 @@
 ﻿using System.Collections.Generic;
 
-[System.Serializable]
-public class Transition
+namespace StateMachine
 {
-    public int priority;
-    public State destination;
-
-    delegate bool Condition();
-
-    List<Condition> conditions;
-
-    public bool CheckConditions()
+    [System.Serializable]
+    public class Transition
     {
-        for (int i = 0; i < conditions.Count; i++)
-            if (conditions[i].Invoke())
-                return true;
+        public int priority;
+        public IState destination;
 
-        return false;
+        delegate bool Condition();
+
+        List<Condition> conditions;
+
+        public bool CheckConditions()
+        {
+            for (int i = 0; i < conditions.Count; i++)
+                if (conditions[i].Invoke())
+                    return true;
+
+            return false;
+        }
     }
 }

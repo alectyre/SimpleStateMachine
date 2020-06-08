@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StateBehaviour : MonoBehaviour
+namespace StateMachine
 {
-    State state;
-
-    public State State { get { return state; } }
-
-    // Start is called before the first frame update
-    void Start()
+    public class StateBehaviour : MonoBehaviour, IState
     {
-        
-    }
+        [SerializeField] IStateMachine stateMachine;
+        [SerializeField] List<Transition> transitions;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+
+        public IStateMachine StateMachine { get { return stateMachine; } set { stateMachine = value; } }
+        public List<Transition> Transitions { get { return transitions; } }
+
+        public void Enter() { }
+
+        public void Exit() { }
+
+        public void Run(float deltaTime) { }
     }
 }

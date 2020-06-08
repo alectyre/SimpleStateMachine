@@ -1,16 +1,19 @@
 ﻿using UnityEditor;
 
-[CustomEditor(typeof(StateMachineBehaviour))]
-public class StateMachineBehaviorEditor : Editor
+namespace StateMachine
 {
-
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(StateMachineBehaviour))]
+    public class StateMachineBehaviorEditor : Editor
     {
-        StateMachineBehaviour stateMachine = (StateMachineBehaviour)target;
 
-        if (stateMachine.CurrentState != null)
-            EditorGUILayout.LabelField("Current State:", stateMachine.CurrentState.GetType().Name);
-        else
-            EditorGUILayout.LabelField("Current State:", "None");
+        public override void OnInspectorGUI()
+        {
+            StateMachineBehaviour stateMachine = (StateMachineBehaviour)target;
+
+            if (stateMachine.CurrentState != null)
+                EditorGUILayout.LabelField("Current State:", stateMachine.CurrentState.GetType().Name);
+            else
+                EditorGUILayout.LabelField("Current State:", "None");
+        }
     }
 }

@@ -1,32 +1,40 @@
-﻿[System.Serializable]
-public class StateMachine
+﻿using UnityEngine;
+using System.Collections.Generic;
+
+namespace StateMachine
 {
-    public State CurrentState { get { return currentState; } }
-
-    State currentState;
-
-    public void Run(float deltaTime)
+    [System.Serializable]
+    public class StateMachine : IStateMachine
     {
-        if (currentState != null)
-        {
-            currentState.Run(deltaTime);
-            currentState.CheckTransitions();
-        }
-    }
+        [SerializeField] IState currentState;
 
-    public void SetState(State newState)
-    {
-        if (currentState != null)
+        public IState CurrentState
         {
-            currentState.Exit();
-            currentState = null; //Any good reason to do this?
+            get { return currentState; }
+            set
+            {
+                if (currentState != null)
+                {
+                    currentState.Exit();
+                    currentState = null; //Any good reason to do this?
+                }
+
+                if (value != null)
+                {
+                    currentState = value;
+                    currentState.StateMachine = this;
+                    currentState.Enter();
+                }
+            }
         }
 
-        if (newState != null)
+        public void Run(float deltaTime)
         {
-            currentState = newState;
-            currentState.stateMachine = this;
-            currentState.Enter();
+            if (currentState != null)
+            {
+                currentState.Run(deltaTime);
+                StateMachineUtility.CheckTransitions(this, currentState.Transitions);
+            }
         }
     }
 }
