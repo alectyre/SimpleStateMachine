@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 [System.Serializable]
 public class State
 {
+    public StateMachine stateMachine;
     public List<Transition> transitions;
 
-    bool isRunning;
-    bool isTransitioning;
 
     public virtual void Enter() { }
 
@@ -16,7 +13,7 @@ public class State
 
     public virtual void Run(float deltaTime) { }
 
-    void CheckTransitions()
+    public void CheckTransitions()
     {
         Transition selectedTransition = null;
 
@@ -35,9 +32,9 @@ public class State
             }
         }
 
-        if(selectedTransition != null)
+        if(selectedTransition != null && stateMachine != null)
         {
-            //Start transition
+            stateMachine.SetState(selectedTransition.destination);
         }
     }
 }
