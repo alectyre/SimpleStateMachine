@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace StateMachine
+namespace SMKit
 {
     public class StateMachineUtility
     {
-        public static void CheckTransitions(IStateMachine stateMachine, List<Transition> transitions)
+        public static Transition SelectTransition(List<Transition> transitions)
         {
             Transition selectedTransition = null;
 
@@ -12,7 +12,7 @@ namespace StateMachine
             {
                 if (transition.CheckConditions())
                 {
-                    if (transition == null)
+                    if (selectedTransition == null)
                     {
                         selectedTransition = transition;
                     }
@@ -23,10 +23,7 @@ namespace StateMachine
                 }
             }
 
-            if (selectedTransition != null)
-            {
-                stateMachine.CurrentState = selectedTransition.destination;
-            }
+            return selectedTransition;
         }
     }
 }
