@@ -1,37 +1,52 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using SMKit;
-using SMKit.StateMachine;
+using SimpleStateMachine;
 
-public class StatemachineTest : MonoBehaviour
+public class StateMachineDemo : MonoBehaviour
 {
-    [SerializeField] Image stateImage;
-    [SerializeField] Toggle greenToggle;
-    [SerializeField] Toggle redToggle;
-    [SerializeField] Toggle blueToggle;
+    [SerializeField] private Image stateImage = null;
+    [SerializeField] private Toggle greenToggle = null;
+    [SerializeField] private Toggle redToggle = null;
+    [SerializeField] private Toggle blueToggle = null;
 
     StateMachine stateMachine;
+
+
 
     private void Awake()
     {
         stateMachine = new StateMachine();
-
-        State greenState = new SimpleState("Green State", () => {
+        
+        State greenState = new SimpleState(() =>
+        {
             Debug.Log("Entered GreenState");
             stateImage.color = Color.green;
-        }, () => {
+        },
+        null,
+        () =>
+        {
             Debug.Log("Exit GreenState");
         });
-        State redState = new SimpleState("Red State", () => {
+
+        State redState = new SimpleState(() =>
+        {
             Debug.Log("Exited GreenState");
             stateImage.color = Color.red;
-        }, () => {
+        },
+        null,
+        () =>
+        {
             Debug.Log("Entered RedState");
         });
-        State blueState = new SimpleState("Blue State", () => {
+
+        State blueState = new SimpleState(() =>
+        {
             Debug.Log("Entered BlueState");
             stateImage.color = Color.blue;
-        }, () => {
+        },
+        null,
+        () =>
+        {
             Debug.Log("Exited BlueState");
         });
 
@@ -49,6 +64,7 @@ public class StatemachineTest : MonoBehaviour
 
     private void Update()
     {
-        stateMachine.Run(Time.deltaTime);
+        stateMachine.CheckForTransition();
+        stateMachine.RunState();
     }
 }

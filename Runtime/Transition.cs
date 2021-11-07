@@ -1,25 +1,24 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace SMKit
+namespace SimpleStateMachine
 {
     [Serializable]
     public class Transition
     {
         public int priority;
+        public State destination;
+        public List<Func<bool>> conditions = new List<Func<bool>>();
 
-        public object destination;
-
-        List<Func<bool>> conditions;
 
 
         public Transition() : this(null, 0, null) { }
 
-        public Transition(object destination) : this(destination, 0, null) { }
+        public Transition(State destination) : this(destination, 0, null) { }
 
-        public Transition(object destination, params Func<bool>[] conditions) : this(destination, 0, conditions) { }
+        public Transition(State destination, params Func<bool>[] conditions) : this(destination, 0, conditions) { }
 
-        public Transition(object destination, int priority, params Func<bool>[] conditions)
+        public Transition(State destination, int priority, params Func<bool>[] conditions)
         {
             this.destination = destination;
             this.priority = priority;

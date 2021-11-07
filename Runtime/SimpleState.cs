@@ -1,28 +1,32 @@
 ﻿using System;
 
-namespace SMKit.StateMachine
+namespace SimpleStateMachine
 {
     public class SimpleState : State
     {
-        public string name;
         public Action onEnter;
+
+        public Action onRun;
+
         public Action onExit;
 
 
-        public SimpleState() : this(null, null) { }
 
-        public SimpleState(Action onEnter, Action onExit) : this("", onEnter, onExit) { }
-     
-        public SimpleState(string name, Action onEnter, Action onExit)
+        public SimpleState(Action onEnter, Action onRun, Action onExit)
         {
-            this.name = name;
             this.onEnter = onEnter;
+            this.onRun = onRun;
             this.onExit = onExit;
         }
 
         public override void Enter()
         {
             onEnter?.Invoke();
+        }
+
+        public override void Run()
+        {
+            onRun?.Invoke();
         }
 
         public override void Exit()
